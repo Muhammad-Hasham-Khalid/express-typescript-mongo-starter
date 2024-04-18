@@ -1,18 +1,18 @@
-import { StatusCodes, getReasonPhrase } from 'http-status-codes';
+import { type StatusCodes, getReasonPhrase } from 'http-status-codes';
 
-type AppExceptionParams = {
+interface AppExceptionParams {
   name: string;
   httpCode: StatusCodes;
   description?: string;
   isOperational?: boolean;
-  metadata?: Record<string, any>;
-};
+  metadata?: Record<string, unknown>;
+}
 
 export class AppException extends Error {
   public readonly name: string;
   public readonly httpCode: StatusCodes;
   public readonly isOperational: boolean;
-  public readonly metadata: Record<string, any>;
+  public readonly metadata: Record<string, unknown>;
 
   constructor({
     name,
