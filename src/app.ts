@@ -7,6 +7,7 @@ import http from 'http';
 import morgan from 'morgan';
 import { ErrorHandler } from '~/lib/error-handler';
 import { StatusCodes } from 'http-status-codes';
+import { Logger } from './lib/logger';
 
 class App {
   private readonly _app: Express;
@@ -22,9 +23,9 @@ class App {
 
   public start(): void {
     const server = http.createServer(this._app);
-    const PORT = process.env.PORT ?? 3000;
+    const PORT = process.env.PORT;
     server.listen(PORT, () => {
-      console.log(`server listening on http://localhost:${PORT}`);
+      Logger.info(`server listening on http://localhost:${PORT}`);
     });
   }
 
