@@ -13,6 +13,5 @@ export const Logger = createLogger({
 });
 
 if (process.env.NODE_ENV !== 'production') {
-  const transportConsole = new Console({ format: simple() });
-  Logger.add(transportConsole);
+  Logger.add(new Console({ format: simple() }));
 }
