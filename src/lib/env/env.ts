@@ -1,11 +1,11 @@
-import dotenv from 'dotenv';
+import dotenv, { type DotenvConfigOptions } from 'dotenv';
 import { EnvSchema } from './schema';
 import { Logger } from '~/lib/logger';
 import { ZodError } from 'zod';
 
-export function loadEnv(): void {
+export function loadEnv(options?: DotenvConfigOptions): void {
   try {
-    dotenv.config();
+    dotenv.config(options);
     EnvSchema.parse(process.env);
     Logger.info('✅ Loaded environment successfully');
   } catch (error) {
