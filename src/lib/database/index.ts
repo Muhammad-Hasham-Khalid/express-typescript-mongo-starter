@@ -1,0 +1,1 @@
+export { connectToDatabase } from './database';

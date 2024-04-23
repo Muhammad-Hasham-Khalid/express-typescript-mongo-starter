@@ -8,6 +8,7 @@ import morgan from 'morgan';
 import { ErrorHandler } from '~/lib/error-handler';
 import { StatusCodes } from 'http-status-codes';
 import { Logger } from './lib/logger';
+import { v1 } from './api/v1';
 
 class App {
   private readonly _app: Express;
@@ -45,6 +46,7 @@ class App {
     app.route('/healthcheck').get((_req, res) => {
       return res.status(StatusCodes.OK).send('RUNNING');
     });
+    app.use('/api/v1', v1);
   }
 
   private _setupErrorHandler(app: Express): void {
