@@ -23,6 +23,14 @@ export class AuthService {
   }
 
   public async register(registerDto: RegisterDto) {
+    const alreadyExists = await this._userService.exists({
+      $or: [{ email: registerDto.email }, { username: registerDto.username }],
+    });
+
+    if (alreadyExists) {
+      throw new BadRequestException('user with this email or username already exists');
+    }
+
     const newUser = await this._userService.create(registerDto);
 
     const payload = { id: newUser.id, email: newUser.email };

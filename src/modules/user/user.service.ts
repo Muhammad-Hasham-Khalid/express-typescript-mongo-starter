@@ -21,4 +21,9 @@ export class UserService {
     const user = await UserModel.findOne(query).exec();
     return user;
   }
+
+  async exists(query: FilterQuery<User>): Promise<boolean> {
+    const result = await UserModel.exists(query).exec();
+    return Boolean(result);
+  }
 }
