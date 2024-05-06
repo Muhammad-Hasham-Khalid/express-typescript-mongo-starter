@@ -28,7 +28,6 @@
     "@types/node": "^20.12.7",
     "@typescript-eslint/eslint-plugin": "^7.7.0",
     "@typescript-eslint/parser": "^7.7.0",
-    "concurrently": "^8.2.2",
     "cross-env": "^7.0.3",
     "eslint": "^8.57.0",
     "eslint-config-love": "^47.0.0",
@@ -57,7 +56,6 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.3.2",
     "morgan": "^1.10.0",
-    "reflect-metadata": "^0.2.2",
     "winston": "^3.13.0",
     "zod": "^3.22.4"
   }

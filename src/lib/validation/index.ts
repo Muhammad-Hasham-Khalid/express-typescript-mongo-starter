@@ -1,1 +1,1 @@
-export { Body } from './validate-body';
+export { validateBody } from './validate-body';

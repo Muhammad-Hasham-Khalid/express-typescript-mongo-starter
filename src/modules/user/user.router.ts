@@ -1,8 +1,12 @@
 import { Router } from 'express';
 import { UserController } from './user.controller';
+import { JwtAuthentication, makeAuthenticate } from '~/lib/authenticator';
 
 const userController = new UserController();
 
 export const UserRouter = Router();
 
-UserRouter.get('/me', userController.me.bind(userController));
+const auth = new JwtAuthentication();
+const authRequired = makeAuthenticate(auth);
+
+UserRouter.get('/me', authRequired, userController.me);

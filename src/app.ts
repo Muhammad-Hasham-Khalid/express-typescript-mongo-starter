@@ -12,9 +12,11 @@ import { v1 } from './api/v1';
 
 class App {
   private readonly _app: Express;
+  public readonly server: http.Server;
 
   constructor() {
     this._app = express();
+    this.server = http.createServer(this._app);
 
     this._initializeSecurity(this._app);
     this._initializeMiddleware(this._app);
@@ -22,11 +24,9 @@ class App {
     this._setupErrorHandler(this._app);
   }
 
-  public start(): void {
-    const server = http.createServer(this._app);
-    const PORT = process.env.PORT;
-    server.listen(PORT, () => {
-      Logger.info(`server listening on http://localhost:${PORT}`);
+  public start(port: number): void {
+    this.server.listen(port, () => {
+      Logger.info(`server listening on http://localhost:${port}`);
     });
   }
 
