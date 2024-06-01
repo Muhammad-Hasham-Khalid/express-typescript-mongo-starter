@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { UserController } from './user.controller';
-import { JwtAuthentication, makeAuthenticate } from '~/lib/authenticator';
+import { JwtAuthentication, makeAuthenticate } from '~/lib/authentication';
 
 const userController = new UserController();
 

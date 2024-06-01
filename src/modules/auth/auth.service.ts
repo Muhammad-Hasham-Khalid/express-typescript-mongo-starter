@@ -1,13 +1,13 @@
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 import { BadRequestException } from '~/lib/exceptions';
 import { UserRepository } from '~/modules/user/user.repository';
-import { AuthTokenPayload } from './dtos/auth-token-payload.dto';
 import type { LoginDto } from './dtos/login.dto';
 import type { RegisterDto } from './dtos/register.dto';
+import { JwtAuthentication } from '~/lib/authentication';
 
 export class AuthService {
   private readonly _userRepository = new UserRepository();
+  private readonly _jwtAuthentication = new JwtAuthentication();
 
   public async login(loginDto: LoginDto) {
     const foundUser = await this._userRepository.findOne({ email: loginDto.email });
@@ -20,7 +20,7 @@ export class AuthService {
       id: foundUser._id.toString(),
       email: foundUser.email,
     };
-    const token = this._generateAuthToken(payload);
+    const token = this._jwtAuthentication.createToken(payload);
 
     return { token };
   }
@@ -40,19 +40,9 @@ export class AuthService {
       id: newUser._id.toString(),
       email: newUser.email,
     };
-    const token = this._generateAuthToken(payload);
+    const token = this._jwtAuthentication.createToken(payload);
 
     return { token };
-  }
-
-  private _generateAuthToken(payload: AuthTokenPayload) {
-    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '30d' });
-    return token;
-  }
-
-  public decodeToken(token: string) {
-    const decodedToken = AuthTokenPayload.parse(jwt.decode(token));
-    return decodedToken;
   }
 
   public async comparePassword(password: string, hashedPassword: string) {
