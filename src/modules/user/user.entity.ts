@@ -10,5 +10,6 @@ const userSchema = new Schema(
 );
 
 export type User = InferSchemaType<typeof userSchema>;
+export type SafeUser = Omit<User, 'password'>;
 
 export const UserModel = model<User>('user', userSchema);

@@ -7,3 +7,6 @@ export const RegisterDto = z.object({
 });
 
 export type RegisterDto = z.infer<typeof RegisterDto>;
+export interface RegisterResponse {
+  token: string;
+}

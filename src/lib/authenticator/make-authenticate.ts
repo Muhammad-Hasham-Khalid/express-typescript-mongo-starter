@@ -1,9 +1,9 @@
 import type { NextFunction, Request, Response } from 'express';
-import type { User } from '~/modules/user/user.entity';
+import type { SafeUser } from '~/modules/user/user.entity';
 import type { Authentication } from './authentication';
 
 interface AuthenticatedRequest {
-  user?: User;
+  user?: SafeUser;
 }
 
 export function makeAuthenticate(auth: Authentication) {

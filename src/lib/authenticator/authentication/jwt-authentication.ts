@@ -1,11 +1,13 @@
 import type { Request } from 'express';
 import { UnauthorizedException } from '~/lib/exceptions';
 import { AuthService } from '~/modules/auth/auth.service';
-import { UserService } from '~/modules/user/user.service';
 import type { Authentication } from './types';
+import { UserRepository } from '~/modules/user/user.repository';
+import { UserService } from '~/modules/user/user.service';
 
 export class JwtAuthentication implements Authentication {
   private readonly _authService = new AuthService();
+  private readonly _userRepository = new UserRepository();
   private readonly _userService = new UserService();
 
   async validate(req: Request) {
@@ -20,11 +22,11 @@ export class JwtAuthentication implements Authentication {
     }
 
     const decodedToken = this._authService.decodeToken(authToken);
-    const user = await this._userService.findById(decodedToken.id);
+    const user = await this._userRepository.findById(decodedToken.id);
 
     if (user === null) throw new UnauthorizedException('token is invalid');
 
-    req.user = user.toJSON();
+    req.user = this._userService.protect(user);
 
     return true;
   }
