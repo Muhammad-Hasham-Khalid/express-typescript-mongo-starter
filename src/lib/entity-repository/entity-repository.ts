@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import type { FilterQuery, Model } from 'mongoose';
+import type { FilterQuery, Model, ProjectionType, QueryOptions } from 'mongoose';
 
 export abstract class EntityRepository<
   DocType,
@@ -9,14 +9,22 @@ export abstract class EntityRepository<
 > {
   constructor(protected _model: Model<DocType, QueryHelpers, InstanceMethods, Virtuals>) {}
 
-  async findById(id: string) {
-    const user = await this._model.findById(id).lean().exec();
-    return user;
+  async findById(
+    id: string,
+    projection?: ProjectionType<DocType> | null,
+    options?: QueryOptions<DocType> | null,
+  ) {
+    const entity = await this._model.findById(id, projection, options).lean().exec();
+    return entity;
   }
 
-  async findOne(query: FilterQuery<DocType>) {
-    const user = await this._model.findOne(query).lean().exec();
-    return user;
+  async findOne(
+    query: FilterQuery<DocType>,
+    projection?: ProjectionType<DocType> | null,
+    options?: QueryOptions<DocType> | null,
+  ) {
+    const entity = await this._model.findOne(query, projection, options).lean().exec();
+    return entity;
   }
 
   async exists(query: FilterQuery<DocType>): Promise<boolean> {
