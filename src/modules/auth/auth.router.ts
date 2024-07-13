@@ -1,12 +1,7 @@
 import { Router } from 'express';
-import { validateBody } from '~/lib/validation';
-import { AuthController } from './auth.controller';
-import { LoginDto } from './dtos/login.dto';
-import { RegisterDto } from './dtos/register.dto';
-
-const authController = new AuthController();
+import * as AuthController from './auth.controller';
 
 export const AuthRouter = Router();
 
-AuthRouter.post('/login', validateBody(LoginDto), authController.login);
-AuthRouter.post('/register', validateBody(RegisterDto), authController.register);
+AuthRouter.post('/login', AuthController.login);
+AuthRouter.post('/register', AuthController.register);

@@ -1,8 +1,5 @@
-import type { Request, Response } from 'express';
-import type { SafeUser } from './user.entity';
+import { makeHandler } from '~/lib/core/make-handler';
 
-export class UserController {
-  me = (req: Request, res: Response<SafeUser | undefined>) => {
-    return res.status(200).send(req.user);
-  };
-}
+export const me = makeHandler({}, (req, res) => {
+  return res.status(200).send(req.user);
+});
