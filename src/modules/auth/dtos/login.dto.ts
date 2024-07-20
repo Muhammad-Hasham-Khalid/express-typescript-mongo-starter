@@ -6,6 +6,3 @@ export const LoginDto = z.object({
 });
 
 export type LoginDto = z.infer<typeof LoginDto>;
-export interface LoginResponse {
-  token: string;
-}

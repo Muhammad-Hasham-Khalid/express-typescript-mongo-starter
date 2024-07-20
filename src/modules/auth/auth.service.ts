@@ -10,17 +10,16 @@ export class AuthService {
   private readonly _jwtAuthentication = new JwtAuthentication();
 
   public async login(loginDto: LoginDto) {
-    const foundUser = await this._userRepository.findOne({ email: loginDto.email });
-    if (foundUser == null) throw new BadRequestException('invalid email');
+    const user = await this._userRepository.findOne({ email: loginDto.email });
+    if (user == null) throw new BadRequestException('invalid email');
 
-    const isPasswordCorrect = await bcrypt.compare(loginDto.password, foundUser.password);
+    const isPasswordCorrect = await bcrypt.compare(loginDto.password, user.password);
     if (!isPasswordCorrect) throw new BadRequestException('invalid password');
 
-    const payload = {
-      id: foundUser._id.toString(),
-      email: foundUser.email,
-    };
-    const token = this._jwtAuthentication.createToken(payload);
+    const token = this._jwtAuthentication.createToken({
+      id: user._id.toString(),
+      email: user.email,
+    });
 
     return { token };
   }
@@ -34,11 +33,11 @@ export class AuthService {
       throw new BadRequestException('user with this email or username already exists');
     }
 
-    const newUser = await this._userRepository.create(registerDto);
+    const registeredUser = await this._userRepository.create(registerDto);
 
     const payload = {
-      id: newUser._id.toString(),
-      email: newUser.email,
+      id: registeredUser._id.toString(),
+      email: registeredUser.email,
     };
     const token = this._jwtAuthentication.createToken(payload);
 

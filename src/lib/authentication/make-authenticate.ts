@@ -4,6 +4,7 @@ import type { Authentication } from './types';
 import { UnauthorizedException } from '../exceptions';
 
 interface AuthenticatedRequest {
+  /** @property current user if the request is authenticated */
   user?: SafeUser;
 }
 
