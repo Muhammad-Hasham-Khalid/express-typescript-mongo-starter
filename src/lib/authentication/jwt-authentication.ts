@@ -28,7 +28,9 @@ export class JwtAuthentication implements Authentication {
   }
 
   public createToken(payload: AuthTokenPayload) {
-    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '30d' });
+    const token = jwt.sign(payload, process.env.JWT_SECRET, {
+      expiresIn: '30d',
+    });
     return token;
   }
 }

@@ -1,7 +1,12 @@
 import 'express-async-errors';
 
 import cors from 'cors';
-import express, { type NextFunction, type Express, type Request, type Response } from 'express';
+import express, {
+  type NextFunction,
+  type Express,
+  type Request,
+  type Response,
+} from 'express';
 import helmet from 'helmet';
 import http from 'http';
 import morgan from 'morgan';

@@ -1,5 +1,10 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import type { FilterQuery, Model, ProjectionType, QueryOptions } from 'mongoose';
+import type {
+  FilterQuery,
+  Model,
+  ProjectionType,
+  QueryOptions,
+} from 'mongoose';
 
 export abstract class EntityRepository<
   DocType,
@@ -7,14 +12,21 @@ export abstract class EntityRepository<
   InstanceMethods = {},
   Virtuals = {},
 > {
-  constructor(protected _model: Model<DocType, QueryHelpers, InstanceMethods, Virtuals>) {}
+  constructor(
+    protected _model: Model<DocType, QueryHelpers, InstanceMethods, Virtuals>,
+  ) {
+    this.constructor.prototype = _model;
+  }
 
   async findById(
     id: string,
     projection?: ProjectionType<DocType> | null,
     options?: QueryOptions<DocType> | null,
   ) {
-    const entity = await this._model.findById(id, projection, options).lean().exec();
+    const entity = await this._model
+      .findById(id, projection, options)
+      .lean()
+      .exec();
     return entity;
   }
 
@@ -23,7 +35,10 @@ export abstract class EntityRepository<
     projection?: ProjectionType<DocType> | null,
     options?: QueryOptions<DocType> | null,
   ) {
-    const entity = await this._model.findOne(query, projection, options).lean().exec();
+    const entity = await this._model
+      .findOne(query, projection, options)
+      .lean()
+      .exec();
     return entity;
   }
 

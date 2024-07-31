@@ -8,7 +8,10 @@ export async function connectToDatabase(databaseURI: string) {
     await connect(databaseURI);
     Logger.info('Database Connected');
   } catch (_error) {
-    const error = _error instanceof Error ? _error : new Error('Database connection failed');
+    const error =
+      _error instanceof Error
+        ? _error
+        : new Error('Database connection failed');
 
     Logger.error(error.message);
 

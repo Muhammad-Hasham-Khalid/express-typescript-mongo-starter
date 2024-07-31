@@ -17,7 +17,9 @@ export function makeAuthenticate(auth: Authentication) {
 
     const authToken = authHeader.split(' ').at(1);
     if (typeof authToken === 'undefined') {
-      throw new UnauthorizedException('authorization token not in proper format');
+      throw new UnauthorizedException(
+        'authorization token not in proper format',
+      );
     }
 
     const userInfo = await auth.validate(authToken);

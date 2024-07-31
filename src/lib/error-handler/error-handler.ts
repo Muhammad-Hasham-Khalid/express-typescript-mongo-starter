@@ -4,14 +4,21 @@ import { StatusCodes } from 'http-status-codes';
 
 export const ErrorHandler = new (class ErrorHandler {
   public handleError(error: Error, response?: Response): void {
-    if (error instanceof AppException && error.isOperational && typeof response !== 'undefined') {
+    if (
+      error instanceof AppException &&
+      error.isOperational &&
+      typeof response !== 'undefined'
+    ) {
       this._handleOperationalError(error, response);
     } else {
       this._handleCriticalError(error, response);
     }
   }
 
-  private _handleOperationalError(error: AppException, response: Response): void {
+  private _handleOperationalError(
+    error: AppException,
+    response: Response,
+  ): void {
     response.status(error.httpCode).json({
       statusCode: error.httpCode,
       message: error.message,

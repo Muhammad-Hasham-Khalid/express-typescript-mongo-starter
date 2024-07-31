@@ -13,7 +13,10 @@ export class AuthService {
     const user = await this._userRepository.findOne({ email: loginDto.email });
     if (user == null) throw new BadRequestException('invalid email');
 
-    const isPasswordCorrect = await bcrypt.compare(loginDto.password, user.password);
+    const isPasswordCorrect = await bcrypt.compare(
+      loginDto.password,
+      user.password,
+    );
     if (!isPasswordCorrect) throw new BadRequestException('invalid password');
 
     const token = this._jwtAuthentication.createToken({
@@ -30,7 +33,9 @@ export class AuthService {
     });
 
     if (alreadyExists) {
-      throw new BadRequestException('user with this email or username already exists');
+      throw new BadRequestException(
+        'user with this email or username already exists',
+      );
     }
 
     const registeredUser = await this._userRepository.create(registerDto);
