@@ -1,19 +1,21 @@
 import 'express-async-errors';
 
+import compression from 'compression';
+import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express, {
-  type NextFunction,
   type Express,
+  type NextFunction,
   type Request,
   type Response,
 } from 'express';
 import helmet from 'helmet';
 import http from 'http';
+import { StatusCodes } from 'http-status-codes';
 import morgan from 'morgan';
 import { ErrorHandler } from '~/lib/error-handler';
-import { StatusCodes } from 'http-status-codes';
-import { Logger } from './lib/logger';
 import { v1 } from './api/v1';
+import { Logger } from './lib/logger';
 
 class App {
   private readonly _app: Express;
@@ -37,6 +39,8 @@ class App {
 
   private _initializeMiddleware(app: Express): void {
     app.use(morgan('dev'));
+    app.use(compression());
+    app.use(cookieParser());
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
   }
