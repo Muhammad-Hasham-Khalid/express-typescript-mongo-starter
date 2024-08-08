@@ -14,9 +14,7 @@ export abstract class EntityRepository<
 > {
   constructor(
     protected _model: Model<DocType, QueryHelpers, InstanceMethods, Virtuals>,
-  ) {
-    this.constructor.prototype = _model;
-  }
+  ) {}
 
   async findById(
     id: string,
