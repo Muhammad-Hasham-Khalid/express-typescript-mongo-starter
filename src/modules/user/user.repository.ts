@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import { EntityRepository } from '~/lib/entity-repository/entity-repository';
+import { EntityRepository } from '~/lib/entity-repository';
 import type { CreateUserDto } from './dtos/create-user.dto';
 import { UserModel, type User } from './user.entity';
 

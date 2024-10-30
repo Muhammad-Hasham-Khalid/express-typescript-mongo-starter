@@ -7,11 +7,11 @@ export async function connectToDatabase(databaseURI: string) {
   try {
     await connect(databaseURI);
     Logger.info('Database Connected');
-  } catch (_error) {
-    const error =
-      _error instanceof Error
-        ? _error
-        : new Error('Database connection failed');
+  } catch (exception) {
+    let error = new Error('Database connection failed');
+    if (exception instanceof Error) {
+      error = exception;
+    }
 
     Logger.error(error.message);
 

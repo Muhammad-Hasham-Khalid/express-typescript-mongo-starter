@@ -3,18 +3,22 @@ import { StatusCodes } from 'http-status-codes';
 import { type z } from 'zod';
 import { AppException } from '~/lib/exceptions';
 
+interface ValidationSchema<Body, Query, Params> {
+  body?: z.Schema<Body>;
+  query?: z.Schema<Query>;
+  params?: z.Schema<Params>;
+}
+
+type RequestHandler<Body, Query, Params> = (
+  req: Request<Params, unknown, Body, Query>,
+  res: Response,
+  next: NextFunction,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+) => any | Promise<any>;
+
 export function makeHandler<Body, Query, Params>(
-  schema: {
-    body?: z.Schema<Body>;
-    query?: z.Schema<Query>;
-    params?: z.Schema<Params>;
-  },
-  handler: (
-    req: Request<Params, unknown, Body, Query>,
-    res: Response,
-    next: NextFunction,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  ) => any | Promise<any>,
+  schema: ValidationSchema<Body, Query, Params>,
+  handler: RequestHandler<Body, Query, Params>,
 ) {
   return async function (req: Request, res: Response, next: NextFunction) {
     if (typeof schema.body !== 'undefined') {
