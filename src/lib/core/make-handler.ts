@@ -57,6 +57,6 @@ export function makeHandler<Body, Query, Params>(
       }
     }
 
-    await handler(req as Request<Params, unknown, Body, Query>, res, next);
+    return handler(req as Request<Params, unknown, Body, Query>, res, next);
   };
 }

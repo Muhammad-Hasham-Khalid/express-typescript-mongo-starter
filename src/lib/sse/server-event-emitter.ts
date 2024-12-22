@@ -25,11 +25,11 @@ export class ServerEventEmitter {
 
   public dispose() {
     this._stream.end();
+    Logger.info(`disposed ServerEventEmitter with id ${this._id}`);
   }
 
   // NOTE: keep this line if you are using the using keyword otherwise remove it
   public [Symbol.dispose]() {
     this.dispose();
-    Logger.info(`disposed ServerEventEmitter with id ${this._id}`);
   }
 }
